@@ -1,7 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
- *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013-2014 Qlogic Corporation
  * All rights reserved.
@@ -129,7 +127,7 @@ qls_rx_comp(qla_host_t *ha, uint32_t rxr_idx, uint32_t cq_idx, q81_rx_t *cq_e)
 	qla_rx_ring_t	*rxr;
 	device_t	dev = ha->pci_dev;
 	struct mbuf     *mp = NULL;
-	struct ifnet	*ifp = ha->ifp;
+	if_t ifp = ha->ifp;
 #if defined(INET) || defined(INET6)
 	struct lro_ctrl	*lro;
 #endif
@@ -210,7 +208,7 @@ qls_rx_comp(qla_host_t *ha, uint32_t rxr_idx, uint32_t cq_idx, q81_rx_t *cq_e)
 			} else
 #endif
 			{
-				(*ifp->if_input)(ifp, mp);
+				if_input(ifp, mp);
 			}
 		}
 	} else {

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1994-1995 Søren Schmidt
  * All rights reserved.
@@ -31,9 +31,8 @@ __FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
-#include <sys/sdt.h>
-#include <sys/systm.h>
 #include <sys/proc.h>
+#include <sys/sdt.h>
 
 #include <i386/linux/linux.h>
 #include <i386/linux/linux_proto.h>
@@ -51,6 +50,7 @@ LIN_SDT_PROVIDER_DECLARE(LINUX_DTRACE);
 
 UNIMPLEMENTED(break);
 UNIMPLEMENTED(ftime);
+UNIMPLEMENTED(fstat);
 UNIMPLEMENTED(gtty);
 UNIMPLEMENTED(stty);
 UNIMPLEMENTED(lock);
@@ -60,7 +60,6 @@ UNIMPLEMENTED(profil);
 UNIMPLEMENTED(ulimit);
 
 DUMMY(bdflush);
-DUMMY(fstat);
 DUMMY(olduname);
 DUMMY(stime);
 DUMMY(uname);

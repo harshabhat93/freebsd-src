@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Alexander Motin <mav@FreeBSD.org>
  * Copyright (c) 2004, 2005 Silicon Graphics International Corp.
@@ -61,7 +61,7 @@ __FBSDID("$FreeBSD$");
 
 struct tpcl_softc {
 	struct ctl_port port;
-	int cur_tag_num;
+	u_int cur_tag_num;
 };
 
 static struct tpcl_softc tpcl_softc;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Roman Divacky
  * All rights reserved.
@@ -30,8 +30,6 @@
 
 #ifndef _LINUX_MISC_H_
 #define	_LINUX_MISC_H_
-
-#include <sys/sysctl.h>
 
 #define	LINUX_MAX_PID_NS_LEVEL	32
 

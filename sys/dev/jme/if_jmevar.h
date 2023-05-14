@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008, Pyun YongHyeon <yongari@FreeBSD.org>
  * All rights reserved.
@@ -172,7 +172,7 @@ struct jme_hw_stats {
  * Software state per device.
  */
 struct jme_softc {
-	struct ifnet 		*jme_ifp;
+	if_t			jme_ifp;
 	device_t		jme_dev;
 	device_t		jme_miibus;
 	struct resource		*jme_res[1];

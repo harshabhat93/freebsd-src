@@ -62,7 +62,8 @@ __DEFAULT_NO_OPTIONS = \
     INIT_ALL_ZERO \
     KERNEL_RETPOLINE \
     RATELIMIT \
-    REPRODUCIBLE_BUILD
+    REPRODUCIBLE_BUILD \
+    VERIEXEC
 
 # Some options are totally broken on some architectures. We disable
 # them. If you need to enable them on an experimental basis, you
@@ -78,19 +79,8 @@ __DEFAULT_NO_OPTIONS = \
 BROKEN_OPTIONS+= INIT_ALL_ZERO
 .endif
 
+# Broken on 32-bit arm, kernel module compile errors
 .if ${MACHINE_CPUARCH} == "arm"
-. if ${MACHINE_ARCH:Marmv[67]*} == ""
-BROKEN_OPTIONS+= CDDL ZFS
-. endif
-.endif
-
-.if ${MACHINE_CPUARCH} == "powerpc" && ${MACHINE_ARCH} == "powerpc"
-BROKEN_OPTIONS+= ZFS
-.endif
-
-# Things that don't work because the kernel doesn't have the support
-# for them.
-.if ${MACHINE} != "i386" && ${MACHINE} != "amd64"
 BROKEN_OPTIONS+= OFED
 .endif
 
@@ -99,8 +89,8 @@ BROKEN_OPTIONS+= OFED
 BROKEN_OPTIONS+= KERNEL_RETPOLINE
 .endif
 
-# EFI doesn't exist on powerpc, or riscv
-.if ${MACHINE:Mpowerpc} || ${MACHINE:Mriscv}
+# EFI doesn't exist on powerpc or riscv and is broken on i386
+.if ${MACHINE:Mpowerpc} || ${MACHINE:Mriscv} || ${MACHINE} == "i386"
 BROKEN_OPTIONS+=EFI
 .endif
 

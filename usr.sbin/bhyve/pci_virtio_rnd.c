@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Nahanni Systems Inc.
  * All rights reserved.
@@ -140,8 +140,7 @@ pci_vtrnd_notify(void *vsc, struct vqueue_info *vq)
 
 
 static int
-pci_vtrnd_init(struct vmctx *ctx __unused, struct pci_devinst *pi,
-    nvlist_t *nvl __unused)
+pci_vtrnd_init(struct pci_devinst *pi, nvlist_t *nvl __unused)
 {
 	struct pci_vtrnd_softc *sc;
 	int fd;

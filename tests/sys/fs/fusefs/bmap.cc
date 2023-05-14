@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 The FreeBSD Foundation
  *
@@ -210,6 +210,8 @@ TEST_P(BmapEof, eof)
 		_)
 	).WillOnce(Invoke(ReturnImmediate([=](auto in, auto& out) {
 		size_t osize = in.body.read.size;
+
+		assert(osize < sizeof(out.body.bytes));
 		out.header.len = sizeof(struct fuse_out_header) + osize;
 		bzero(out.body.bytes, osize);
 	})));

@@ -668,6 +668,9 @@ bool vm_page_reclaim_contig(int req, u_long npages, vm_paddr_t low,
     vm_paddr_t high, u_long alignment, vm_paddr_t boundary);
 bool vm_page_reclaim_contig_domain(int domain, int req, u_long npages,
     vm_paddr_t low, vm_paddr_t high, u_long alignment, vm_paddr_t boundary);
+bool vm_page_reclaim_contig_domain_ext(int domain, int req, u_long npages,
+    vm_paddr_t low, vm_paddr_t high, u_long alignment, vm_paddr_t boundary,
+    int desired_runs);
 void vm_page_reference(vm_page_t m);
 #define	VPR_TRYFREE	0x01
 #define	VPR_NOREUSE	0x02
@@ -991,6 +994,13 @@ vm_page_all_valid(vm_page_t m)
 {
 
 	return (m->valid == VM_PAGE_BITS_ALL);
+}
+
+static inline bool
+vm_page_any_valid(vm_page_t m)
+{
+
+	return (m->valid != 0);
 }
 
 static inline bool

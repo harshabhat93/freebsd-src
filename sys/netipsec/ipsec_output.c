@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002, 2003 Sam Leffler, Errno Consulting
  * Copyright (c) 2016 Andrey V. Elsukov <ae@FreeBSD.org>
@@ -53,6 +53,7 @@
 #include <net/vnet.h>
 
 #include <netinet/in.h>
+#include <netinet/in_pcb.h>
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #include <netinet/ip_var.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 Michael Smith
  * Copyright (c) 1998 Jonathan Lemon
@@ -90,5 +90,9 @@ smbios_walk_table(uint8_t *p, int entries, smbios_callback_t cb, void *arg)
 		p += 2;
 	}
 }
+
+#ifdef _KERNEL
+void identify_hypervisor_smbios(void);
+#endif
 
 #endif /* _SMBIOS_H_ */

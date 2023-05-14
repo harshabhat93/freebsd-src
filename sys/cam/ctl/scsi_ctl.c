@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008, 2009 Silicon Graphics International Corp.
  * Copyright (c) 2014-2015 Alexander Motin <mav@FreeBSD.org>
@@ -1185,7 +1185,7 @@ ctlfedone(struct cam_periph *periph, union ccb *done_ccb)
 		bcopy(atio_cdb_ptr(atio), io->scsiio.cdb, io->scsiio.cdb_len);
 
 #ifdef CTLFEDEBUG
-		printf("%s: %u:%u:%u: tag %04x CDB %02x\n", __func__,
+		printf("%s: %u:%u:%u: tag %jx CDB %02x\n", __func__,
 		        io->io_hdr.nexus.initid,
 		        io->io_hdr.nexus.targ_port,
 		        io->io_hdr.nexus.targ_lun,

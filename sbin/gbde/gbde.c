@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Poul-Henning Kamp
  * Copyright (c) 2002 Networks Associates Technology, Inc.
@@ -736,6 +736,11 @@ main(int argc, char **argv)
 	char *q, buf[BUFSIZ];
 	struct g_bde_key *gl;
 	struct g_bde_softc sc;
+
+	fprintf(stderr, "GBDE disk-encryption is deprecated,\n");
+	fprintf(stderr, "and will be removed in FreeBSD 15.0\n");
+	fprintf(stderr, "(continuing in 5 seconds)\n");
+	sleep(5);
 
 	if (argc < 3)
 		usage();

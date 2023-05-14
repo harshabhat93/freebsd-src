@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013-2016 Qlogic Corporation
  * All rights reserved.
@@ -51,10 +51,6 @@
 #include <machine/atomic.h>
 #include <machine/_inttypes.h>
 #include <sys/conf.h>
-
-#if __FreeBSD_version < 900044
-#error FreeBSD Version not supported - use version >= 900044
-#endif
 
 #include <net/if.h>
 #include <net/if_var.h>

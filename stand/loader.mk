@@ -162,12 +162,19 @@ vers.c: ${LDRSRC}/newvers.sh ${VERSION_FILE}
 CFLAGS+=	-DELF_VERBOSE
 .endif
 
-.if !empty(HELP_FILES)
+# Each loader variant defines their own help filename. Optional or
+# build-specific commands are included by augmenting HELP_FILES.
+.if !defined(HELP_FILENAME)
+.error Define HELP_FILENAME before including loader.mk
+.endif
+
 HELP_FILES+=	${LDRSRC}/help.common
 
-CLEANFILES+=	loader.help
-FILES+=		loader.help
-
-loader.help: ${HELP_FILES}
-	cat ${HELP_FILES} | awk -f ${LDRSRC}/merge_help.awk > ${.TARGET}
+CFLAGS+=	-DHELP_FILENAME=\"${HELP_FILENAME}\"
+.if ${INSTALL_LOADER_HELP_FILE:Uyes} == "yes"
+CLEANFILES+=	${HELP_FILENAME}
+FILES+=		${HELP_FILENAME}
 .endif
+
+${HELP_FILENAME}: ${HELP_FILES}
+	cat ${HELP_FILES} | awk -f ${LDRSRC}/merge_help.awk > ${.TARGET}

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 - 2003 by Thomas Moestl <tmm@FreeBSD.org>.
  * Copyright (c) 2005 Marius Strobl <marius@FreeBSD.org>
@@ -102,6 +102,22 @@ ofw_bus_gen_child_pnpinfo(device_t cbdev, device_t child, struct sbuf *sb)
 	}
 
 	return (0);
+};
+
+int
+ofw_bus_gen_get_device_path(device_t cbdev, device_t child, const char *locator,
+			   struct sbuf *sb)
+{
+	int rv;
+
+	if ( strcmp(locator, BUS_LOCATOR_OFW) == 0){
+		rv = bus_generic_get_device_path(cbdev, child, locator, sb);
+		if (rv == 0){
+			sbuf_printf(sb, "/%s",  ofw_bus_get_name(child));
+		}
+		return (rv);
+	}
+	return (bus_generic_get_device_path(cbdev, child, locator, sb));
 };
 
 const char *

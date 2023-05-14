@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Stanislav Sedov <stas@FreeBSD.org>.
  * All rights reserved.
@@ -102,7 +102,7 @@ typedef struct ae_stats {
 
 /* Software state structure. */
 typedef struct ae_softc	{
-	struct ifnet		*ifp;
+	if_t			ifp;
 	device_t		dev;
 	device_t		miibus;
 	struct resource		*mem[1];

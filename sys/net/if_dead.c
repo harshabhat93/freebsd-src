@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Robert N. M. Watson
  * All rights reserved.
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD$");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 
 static int
 ifdead_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *sa,

@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -1204,9 +1204,12 @@ vkbd_ioctl(keyboard_t *kbd, u_long cmd, caddr_t arg)
 		break;
 
 	case PIO_KEYMAP:	/* set keyboard translation table */
-	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
 	case PIO_KEYMAPENT:	/* set keyboard translation table entry */
 	case PIO_DEADKEYMAP:	/* set accent key translation table */
+#ifdef COMPAT_FREEBSD13
+	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
+	case OPIO_DEADKEYMAP:	/* set accent key translation table (compat) */
+#endif /* COMPAT_FREEBSD13 */
 		state->ks_accents = 0;
 		/* FALLTHROUGH */
 

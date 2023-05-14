@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000,2001 Jonathan Lemon <jlemon@FreeBSD.org>
  * All rights reserved.
@@ -218,6 +218,9 @@ struct freebsd11_kevent32 {
 #define NOTE_NSECONDS		0x00000008	/* data is nanoseconds */
 #define	NOTE_ABSTIME		0x00000010	/* timeout is absolute */
 
+/* Flags for kqueuex(2) */
+#define	KQUEUE_CLOEXEC	0x00000001	/* close on exec */
+
 struct knote;
 SLIST_HEAD(klist, knote);
 struct kqueue;
@@ -358,6 +361,8 @@ struct timespec;
 
 __BEGIN_DECLS
 int     kqueue(void);
+int     kqueuex(unsigned flags);
+int     kqueue1(int flags);
 int     kevent(int kq, const struct kevent *changelist, int nchanges,
 	    struct kevent *eventlist, int nevents,
 	    const struct timespec *timeout);

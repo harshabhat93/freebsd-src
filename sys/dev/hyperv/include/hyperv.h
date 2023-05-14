@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2012,2016-2017 Microsoft Corp.
  * Copyright (c) 2012 NetApp Inc.
@@ -85,6 +85,11 @@ typedef uint64_t			(*hyperv_tc64_t)(void);
 
 int			hyperv_guid2str(const struct hyperv_guid *, char *,
 			    size_t);
+
+void	hyperv_init_tc(void);
+int		hypercall_page_setup(vm_paddr_t);
+void	hypercall_disable(void);
+bool	hyperv_identify_features(void);
 
 /*
  * hyperv_tc64 could be NULL, if there were no suitable Hyper-V

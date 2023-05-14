@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999, 2000 John D. Polstra.
  * All rights reserved.
@@ -69,9 +69,6 @@ typedef struct {
 
 void *___tls_get_addr(tls_index *ti) __attribute__((__regparm__(1))) __exported;
 void *__tls_get_addr(tls_index *ti) __exported;
-
-#define	RTLD_DEFAULT_STACK_PF_EXEC	PF_X
-#define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
 
 #define md_abi_variant_hook(x)
 

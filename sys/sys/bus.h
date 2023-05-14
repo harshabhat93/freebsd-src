@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997,1998,2003 Doug Rabson
  * All rights reserved.
@@ -761,6 +761,7 @@ void	bus_data_generation_update(void);
 #define BUS_LOCATOR_ACPI	"ACPI"
 #define BUS_LOCATOR_FREEBSD	"FreeBSD"
 #define BUS_LOCATOR_UEFI	"UEFI"
+#define BUS_LOCATOR_OFW		"OFW"
 
 extern int bus_current_pass;
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -147,7 +147,7 @@ struct vm_pptdev_mmio {
 };
 
 struct vm_pptdev_msi {
-	int		vcpu;
+	int		vcpu;		/* unused */
 	int		bus;
 	int		slot;
 	int		func;
@@ -157,7 +157,7 @@ struct vm_pptdev_msi {
 };
 
 struct vm_pptdev_msix {
-	int		vcpu;
+	int		vcpu;		/* unused */
 	int		bus;
 	int		slot;
 	int		func;

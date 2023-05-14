@@ -103,9 +103,9 @@ _CPUCFLAGS = -march=armv5te -D__XSCALE__
 _CPUCFLAGS = -mfloat-abi=softfp
 .  elif ${CPUTYPE} == "cortexa"
 _CPUCFLAGS = -march=armv7 -mfpu=vfp
-.  elif ${CPUTYPE:Marmv[4567]*} != ""
+.  elif ${CPUTYPE:Marmv[67]*} != ""
 # Handle all the armvX types that FreeBSD runs:
-#	armv4, armv4t, armv5, armv5te, armv6, armv6t2, armv7, armv7-a, armv7ve
+#	armv6, armv6t2, armv7, armv7-a, armv7ve
 # they require -march=. All the others require -mcpu=.
 _CPUCFLAGS = -march=${CPUTYPE}
 .  else
@@ -276,6 +276,25 @@ MACHINE_CPU += amd64 sse2 sse mmx
 . elif ${MACHINE_ARCH} == "powerpc"
 .  if ${CPUTYPE} == "e500"
 MACHINE_CPU = booke softfp
+.  elif ${CPUTYPE} == "g4"
+MACHINE_CPU = altivec
+.  endif
+. elif ${MACHINE_ARCH} == "powerpc64"
+.  if ${CPUTYPE} == "e5500"
+MACHINE_CPU = booke
+.  elif ${CPUTYPE} == power7
+MACHINE_CPU = altivec vsx
+.  elif ${CPUTYPE} == power8
+MACHINE_CPU = altivec vsx vsx2
+.  elif ${CPUTYPE} == power9
+MACHINE_CPU = altivec vsx vsx2 vsx3
+.  else
+MACHINE_CPU = altivec
+.  endif
+. elif ${MACHINE_ARCH} == "powerpc64le"
+MACHINE_CPU = altivec vsx vsx2
+.  if ${CPUTYPE} == power9
+MACHINE_CPU += vsx3
 .  endif
 ########## riscv
 . elif ${MACHINE_CPUARCH} == "riscv"
@@ -292,17 +311,11 @@ MACHINE_CPU += armv6
 . if ${MACHINE_ARCH:Marmv7*} != ""
 MACHINE_CPU += armv7
 . endif
-# armv6 and armv7 are a hybrid. It can use the softfp ABI, but doesn't emulate
-# floating point in the general case, so don't define softfp for it at this
-# time. arm is pure softfp, so define it for them.
-. if ${MACHINE_ARCH:Marmv[67]*} == ""
-MACHINE_CPU += softfp
-. endif
 # Normally armv6 and armv7 are hard float ABI from FreeBSD 11 onwards. However
 # when CPUTYPE has 'soft' in it, we use the soft-float ABI to allow building of
 # soft-float ABI libraries. In this case, we have to add the -mfloat-abi=softfp
 # to force that.
-. if ${MACHINE_ARCH:Marmv[67]*} && defined(CPUTYPE) && ${CPUTYPE:M*soft*} != ""
+. if defined(CPUTYPE) && ${CPUTYPE:M*soft*} != ""
 # Needs to be CFLAGS not _CPUCFLAGS because it's needed for the ABI
 # not a nice optimization. Please note: softfp ABI uses hardware floating
 # instructions, but passes arguments to function calls in integer regsiters.
@@ -323,11 +336,7 @@ CFLAGS.gcc+= -mabi=spe -mfloat-gprs=double -Wa,-me500
 .endif
 
 .if ${MACHINE_CPUARCH} == "riscv"
-.if ${MACHINE_ARCH:Mriscv*sf}
-CFLAGS += -march=rv64imac -mabi=lp64
-.else
 CFLAGS += -march=rv64imafdc -mabi=lp64d
-.endif
 .endif
 
 # NB: COPTFLAGS is handled in /usr/src/sys/conf/kern.pre.mk
@@ -373,8 +382,7 @@ CXXFLAGS += ${CXXFLAGS.${MACHINE_ARCH}}
 # Size of time_t:		time32, time64
 #
 .if (${MACHINE} == "arm" && (defined(CPUTYPE) && ${CPUTYPE:M*soft*})) || \
-    (${MACHINE_ARCH} == "powerpc" && (defined(CPUTYPE) && ${CPUTYPE} == "e500")) || \
-    ${MACHINE_ARCH:Mriscv*sf*}
+    (${MACHINE_ARCH} == "powerpc" && (defined(CPUTYPE) && ${CPUTYPE} == "e500"))
 MACHINE_ABI+=	soft-float
 .else
 MACHINE_ABI+=	hard-float

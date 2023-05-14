@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2019 Jeffrey Roberson <jeff@FreeBSD.org>
  * Copyright (c) 2004, 2005 Bosko Milekic <bmilekic@FreeBSD.org>
@@ -3561,7 +3561,8 @@ uma_zalloc_debug(uma_zone_t zone, void **itemp, void *udata, int flags)
 #endif
 
 #ifdef DEBUG_MEMGUARD
-	if ((zone->uz_flags & UMA_ZONE_SMR) == 0 && memguard_cmp_zone(zone)) {
+	if ((zone->uz_flags & (UMA_ZONE_SMR | UMA_ZFLAG_CACHE)) == 0 &&
+	    memguard_cmp_zone(zone)) {
 		void *item;
 		item = memguard_alloc(zone->uz_size, flags);
 		if (item != NULL) {
@@ -3596,7 +3597,8 @@ uma_zfree_debug(uma_zone_t zone, void *item, void *udata)
 	    ("uma_zfree_debug: called with spinlock or critical section held"));
 
 #ifdef DEBUG_MEMGUARD
-	if ((zone->uz_flags & UMA_ZONE_SMR) == 0 && is_memguard_addr(item)) {
+	if ((zone->uz_flags & (UMA_ZONE_SMR | UMA_ZFLAG_CACHE)) == 0 &&
+	    is_memguard_addr(item)) {
 		if (zone->uz_dtor != NULL)
 			zone->uz_dtor(item, zone->uz_size, udata);
 		if (zone->uz_fini != NULL)

@@ -59,6 +59,7 @@ __FBSDID("$FreeBSD$");
 #include <net/if_arp.h>
 #include <net/if_dl.h>
 #include <net/if_llatbl.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/route.h>
 #include <net/route/nhop.h>
@@ -1670,6 +1671,7 @@ in_lltable_alloc(struct lltable *llt, u_int flags, const struct sockaddr *l3addr
 		    lladdr_off);
 		lle->la_flags |= LLE_STATIC;
 		lle->r_flags |= (RLLE_VALID | RLLE_IFADDR);
+		lle->la_expire = 0;
 	}
 
 	return (lle);

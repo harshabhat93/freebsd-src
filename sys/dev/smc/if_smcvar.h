@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Benno Rice.  All rights reserved.
  *
@@ -31,7 +31,7 @@
 #define	_IF_SMCVAR_H_
 
 struct smc_softc {
-	struct ifnet		*smc_ifp;
+	if_t			smc_ifp;
 	device_t		smc_dev;
 	struct mtx		smc_mtx;
 	u_int			smc_chip;

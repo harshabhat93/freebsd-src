@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -41,6 +41,9 @@ struct ifinfomsg {
 	unsigned	ifi_flags;	/* IFF_* flags */
 	unsigned	ifi_change;	/* IFF_* change mask */
 };
+
+/* Linux-specific link-level state flag */
+#define	IFF_LOWER_UP	IFF_NETLINK_1
 
 #ifndef _KERNEL
 /* Compatilbility helpers */
@@ -89,7 +92,7 @@ enum {
 #define IFLA_LINKINFO IFLA_LINKINFO
 	IFLA_NET_NS_PID	= 19,	/* u32: vnet id (not supported) */
 #define	IFLA_NET_NS_PID IFLA_NET_NS_PID
-	IFLA_IFALIAS	= 20,	/* not supported */
+	IFLA_IFALIAS	= 20,	/* string: interface description */
 #define	IFLA_IFALIAS IFLA_IFALIAS
 	IFLA_NUM_VF	= 21,	/* not supported */
 #define	IFLA_NUM_VF IFLA_NUM_VF
@@ -131,9 +134,26 @@ enum {
 	IFLA_ALT_IFNAME, /* Alternative ifname */
 	IFLA_PERM_ADDRESS,
 	IFLA_PROTO_DOWN_REASON,
+	IFLA_PARENT_DEV_NAME,
+	IFLA_PARENT_DEV_BUS_NAME,
+	IFLA_GRO_MAX_SIZE,
+	IFLA_TSO_MAX_SEGS,
+	IFLA_ALLMULTI,
+	IFLA_DEVLINK_PORT,
+	IFLA_GSO_IPV4_MAX_SIZE,
+	IFLA_GRO_IPV4_MAX_SIZE,
+	IFLA_FREEBSD,
 	__IFLA_MAX
 };
 #define IFLA_MAX (__IFLA_MAX - 1)
+
+enum {
+	IFLAF_UNSPEC		= 0,
+	IFLAF_ORIG_IFNAME	= 1,	/* string, original interface name at creation */
+	IFLAF_ORIG_HWADDR	= 2,	/* binary, original hardware address */
+	__IFLAF_MAX
+};
+#define IFLAF_MAX (__IFLAF_MAX - 1)
 
 /*
  * Attributes that can be used as filters:

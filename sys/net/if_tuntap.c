@@ -1,6 +1,6 @@
 /*	$NetBSD: if_tun.c,v 1.14 1994/06/29 06:36:25 cgd Exp $	*/
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1999-2000 by Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -83,6 +83,7 @@
 #include <net/if_clone.h>
 #include <net/if_dl.h>
 #include <net/if_media.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/if_vlan_var.h>
 #include <net/netisr.h>

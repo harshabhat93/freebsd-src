@@ -2433,6 +2433,7 @@ sctp_inpcb_alloc(struct socket *so, uint32_t vrf_id)
 	inp->nrsack_supported = (uint8_t)SCTP_BASE_SYSCTL(sctp_nrsack_enable);
 	inp->pktdrop_supported = (uint8_t)SCTP_BASE_SYSCTL(sctp_pktdrop_enable);
 	inp->idata_supported = 0;
+	inp->zero_checksum = 0;
 
 	inp->fibnum = so->so_fibnum;
 	/* init the small hash table we use to track asocid <-> tcb */
@@ -3460,7 +3461,6 @@ sctp_inpcb_free(struct sctp_inpcb *inp, int immediate, int from)
 			} else {
 				/* mark into shutdown pending */
 				SCTP_ADD_SUBSTATE(stcb, SCTP_STATE_SHUTDOWN_PENDING);
-				sctp_timer_start(SCTP_TIMER_TYPE_SHUTDOWNGUARD, stcb->sctp_ep, stcb, NULL);
 				if ((*stcb->asoc.ss_functions.sctp_ss_is_user_msgs_incomplete) (stcb, &stcb->asoc)) {
 					SCTP_ADD_SUBSTATE(stcb, SCTP_STATE_PARTIAL_MSG_LEFT);
 				}
@@ -6402,6 +6402,14 @@ sctp_load_addresses_from_init(struct sctp_tcb *stcb, struct mbuf *m,
 		} else if (ptype == SCTP_PRSCTP_SUPPORTED) {
 			/* Peer supports pr-sctp */
 			peer_supports_prsctp = 1;
+		} else if (ptype == SCTP_ZERO_CHECKSUM_ACCEPTABLE) {
+			/*
+			 * Only send zero checksums if the upper layer has
+			 * also enabled the support for this.
+			 */
+			if (stcb->asoc.zero_checksum == 1) {
+				stcb->asoc.zero_checksum = 2;
+			}
 		} else if (ptype == SCTP_SUPPORTED_CHUNK_EXT) {
 			/* A supported extension chunk */
 			struct sctp_supported_chunk_types_param *pr_supported;
@@ -6946,6 +6954,7 @@ static void
 sctp_drain(void)
 {
 	struct epoch_tracker et;
+
 	VNET_ITERATOR_DECL(vnet_iter);
 
 	NET_EPOCH_ENTER(et);
@@ -6987,6 +6996,7 @@ sctp_drain(void)
 	VNET_LIST_RUNLOCK_NOSLEEP();
 	NET_EPOCH_EXIT(et);
 }
+
 EVENTHANDLER_DEFINE(vm_lowmem, sctp_drain, NULL, LOWMEM_PRI_DEFAULT);
 EVENTHANDLER_DEFINE(mbuf_lowmem, sctp_drain, NULL, LOWMEM_PRI_DEFAULT);
 

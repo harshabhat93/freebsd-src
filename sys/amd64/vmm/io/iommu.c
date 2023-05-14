@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -258,6 +258,7 @@ iommu_cleanup(void)
 	}
 	IOMMU_DISABLE();
 	IOMMU_DESTROY_DOMAIN(host_domain);
+	host_domain = NULL;
 	IOMMU_CLEANUP();
 }
 

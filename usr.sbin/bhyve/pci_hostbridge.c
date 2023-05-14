@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -31,14 +31,14 @@
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
 
+#include <err.h>
 #include <stdlib.h>
 
 #include "config.h"
 #include "pci_emul.h"
 
 static int
-pci_hostbridge_init(struct vmctx *ctx __unused, struct pci_devinst *pi,
-    nvlist_t *nvl)
+pci_hostbridge_init(struct pci_devinst *pi, nvlist_t *nvl)
 {
 	const char *value;
 	u_int vendor, device;
@@ -49,9 +49,13 @@ pci_hostbridge_init(struct vmctx *ctx __unused, struct pci_devinst *pi,
 	value = get_config_value_node(nvl, "vendor");
 	if (value != NULL)
 		vendor = strtol(value, NULL, 0);
+	else
+		vendor = pci_config_read_reg(NULL, nvl, PCIR_VENDOR, 2, vendor);
 	value = get_config_value_node(nvl, "devid");
 	if (value != NULL)
 		device = strtol(value, NULL, 0);
+	else
+		device = pci_config_read_reg(NULL, nvl, PCIR_DEVICE, 2, device);
 
 	/* config space */
 	pci_set_cfgdata16(pi, PCIR_VENDOR, vendor);
@@ -68,8 +72,16 @@ pci_hostbridge_init(struct vmctx *ctx __unused, struct pci_devinst *pi,
 static int
 pci_amd_hostbridge_legacy_config(nvlist_t *nvl, const char *opts __unused)
 {
-	set_config_value_node(nvl, "vendor", "0x1022");	/* AMD */
-	set_config_value_node(nvl, "devid", "0x7432");	/* made up */
+	nvlist_t *pci_regs;
+
+	pci_regs = create_relative_config_node(nvl, "pcireg");
+	if (pci_regs == NULL) {
+		warnx("amd_hostbridge: failed to create pciregs node");
+		return (-1);
+	}
+
+	set_config_value_node(pci_regs, "vendor", "0x1022"); /* AMD */
+	set_config_value_node(pci_regs, "device", "0x7432"); /* made up */
 
 	return (0);
 }

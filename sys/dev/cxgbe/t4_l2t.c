@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Chelsio Communications, Inc.
  * All rights reserved.
@@ -453,7 +453,7 @@ sysctl_l2t(SYSCTL_HANDLER_ARGS)
 			   e->dmac[3], e->dmac[4], e->dmac[5],
 			   e->vlan & 0xfff, vlan_prio(e), e->lport,
 			   l2e_state(e), atomic_load_acq_int(&e->refcnt),
-			   e->ifp ? e->ifp->if_xname : "-");
+			   e->ifp ? if_name(e->ifp) : "-");
 skip:
 		mtx_unlock(&e->lock);
 	}

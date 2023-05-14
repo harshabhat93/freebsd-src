@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
  *
@@ -1536,7 +1536,7 @@ int c4iw_modify_qp(struct c4iw_dev *rhp, struct c4iw_qp *qhp,
 	case C4IW_QP_STATE_RTS:
 		switch (attrs->next_state) {
 		case C4IW_QP_STATE_CLOSING:
-			BUG_ON(atomic_read(&qhp->ep->com.kref.refcount) < 2);
+			BUG_ON(kref_read(&qhp->ep->com.kref) < 2);
 			t4_set_wq_in_error(&qhp->wq);
 			set_state(qhp, C4IW_QP_STATE_CLOSING);
 			ep = qhp->ep;

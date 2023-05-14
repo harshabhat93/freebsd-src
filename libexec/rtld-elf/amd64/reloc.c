@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 1996, 1997, 1998, 1999 John D. Polstra.
  * All rights reserved.
@@ -33,6 +33,7 @@
  * John Polstra <jdp@polstra.com>.
  */
 
+#define _WANT_P_OSREL
 #include <sys/param.h>
 #include <sys/mman.h>
 #include <machine/cpufunc.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000,2001 Jonathan Lemon <jlemon@FreeBSD.org>
  * Copyright 2004 John-Mark Gurney <jmg@FreeBSD.org>
@@ -1055,6 +1055,19 @@ sys_kqueue(struct thread *td, struct kqueue_args *uap)
 {
 
 	return (kern_kqueue(td, 0, NULL));
+}
+
+int
+sys_kqueuex(struct thread *td, struct kqueuex_args *uap)
+{
+	int flags;
+
+	if ((uap->flags & ~(KQUEUE_CLOEXEC)) != 0)
+		return (EINVAL);
+	flags = 0;
+	if ((uap->flags & KQUEUE_CLOEXEC) != 0)
+		flags |= O_CLOEXEC;
+	return (kern_kqueue(td, flags, NULL));
 }
 
 static void

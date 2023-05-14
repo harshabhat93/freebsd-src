@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1996, by Steve Passe
  * All rights reserved.
@@ -51,9 +51,6 @@ __FBSDID("$FreeBSD$");
 #include <sys/bus.h>
 #include <sys/cons.h>	/* cngetc() */
 #include <sys/cpuset.h>
-#ifdef GPROF 
-#include <sys/gmon.h>
-#endif
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 NetApp, Inc.
  * Copyright (c) 2013 Neel Natu <neel@freebsd.org>
@@ -616,7 +616,7 @@ int
 uart_legacy_alloc(int which, int *baseaddr, int *irq)
 {
 
-	if (which < 0 || which >= UART_NLDEVS || uart_lres[which].inuse)
+	if (which < 0 || which >= (int)UART_NLDEVS || uart_lres[which].inuse)
 		return (-1);
 
 	uart_lres[which].inuse = true;

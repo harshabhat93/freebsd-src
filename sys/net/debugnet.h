@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Isilon Systems, LLC.
  * Copyright (c) 2005-2014 Sandvine Incorporated
@@ -263,7 +263,7 @@ extern int debugnet_arp_nretries;
 #define	DEBUGNET_NOTIFY_MTU(ifp)	debugnet_any_ifnet_update(ifp)
 
 #define	DEBUGNET_SET(ifp, driver)				\
-	(ifp)->if_debugnet_methods = &driver##_debugnet_methods
+	if_setdebugnet_methods((ifp), &driver##_debugnet_methods)
 
 #else /* !DEBUGNET || !INET */
 

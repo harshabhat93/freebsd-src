@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001  The FreeBSD Project
  * All rights reserved.
@@ -29,20 +29,15 @@
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
 
-#include "opt_compat.h"
-
-#include <sys/fcntl.h>
 #include <sys/param.h>
-#include <sys/kernel.h>
+#include <sys/fcntl.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
 #include <sys/priv.h>
 #include <sys/proc.h>
-#include <sys/sdt.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysproto.h>
-#include <sys/systm.h>
 
 #ifdef COMPAT_LINUX32
 #include <machine/../linux32/linux.h>

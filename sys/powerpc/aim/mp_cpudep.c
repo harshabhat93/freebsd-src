@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Marcel Moolenaar
  * All rights reserved.
@@ -306,7 +306,7 @@ cpudep_save_config(void *dummy)
 }
 
 void
-cpudep_ap_setup()
+cpudep_ap_setup(void)
 {
 #ifndef __powerpc64__
 	register_t	reg;

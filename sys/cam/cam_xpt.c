@@ -1,7 +1,7 @@
 /*-
  * Implementation of the Common Access Method Transport (XPT) layer.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997, 1998, 1999 Justin T. Gibbs.
  * Copyright (c) 1997, 1998, 1999 Kenneth D. Merry.
@@ -4018,7 +4018,7 @@ xpt_bus_register(struct cam_sim *sim, device_t parent, uint32_t bus)
 
 	xpt_path_inq(&cpi, path);
 
-	if (cpi.ccb_h.status == CAM_REQ_CMP) {
+	if (cam_ccb_success((union ccb *)&cpi)) {
 		struct xpt_xport **xpt;
 
 		SET_FOREACH(xpt, cam_xpt_xport_set) {

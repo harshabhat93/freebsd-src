@@ -90,7 +90,7 @@ get_histfile(void)
 	const char *histfile;
 
 	/* don't try to save if the history size is 0 */
-	if (hist == NULL || histsizeval() == 0)
+	if (hist == NULL || !strcmp(histsizeval(), "0"))
 		return (NULL);
 	histfile = expandstr("${HISTFILE-${HOME-}/.sh_history}");
 
@@ -190,7 +190,7 @@ histedit(void)
 			if (el != NULL) {
 				if (hist)
 					el_set(el, EL_HIST, history, hist);
-				el_set(el, EL_PROMPT, getprompt);
+				el_set(el, EL_PROMPT_ESC, getprompt, '\001');
 				el_set(el, EL_ADDFN, "sh-complete",
 				    "Filename completion",
 				    sh_complete);
@@ -589,15 +589,16 @@ static int
 comparator(const void *a, const void *b, void *thunk)
 {
 	size_t curpos = (intptr_t)thunk;
+
 	return (strcmp(*(char *const *)a + curpos,
 		*(char *const *)b + curpos));
 }
 
 /*
- * This function is passed to libedit's fn_complete2(). The library will
- * use it instead of its standard function that finds matching files in
- * current directory. If we're at the start of the line, we want to look
- * for available commands from all paths in $PATH.
+ * This function is passed to libedit's fn_complete2(). The library will use
+ * it instead of its standard function that finds matching files in current
+ * directory. If we're at the start of the line, we want to look for
+ * available commands from all paths in $PATH.
  */
 static char
 **sh_matches(const char *text, int start, int end)
@@ -681,13 +682,13 @@ out:
 	}
 	matches[uniq + 1] = NULL;
 	/*
-	 * matches[0] is special: it's not a real matching file name but a common
-	 * prefix for all matching names. It can't be null, unlike any other
-	 * element of the array. When strings matches[0] and matches[1] compare
-	 * equal and matches[2] is null that means to libedit that there is only
-	 * a single match. It will then replace user input with possibly escaped
-	 * string in matches[0] which is the reason to copy the full name of the
-	 * only match.
+	 * matches[0] is special: it's not a real matching file name but
+	 * a common prefix for all matching names. It can't be null, unlike
+	 * any other element of the array. When strings matches[0] and
+	 * matches[1] compare equal and matches[2] is null that means to
+	 * libedit that there is only a single match. It will then replace
+	 * user input with possibly escaped string in matches[0] which is the
+	 * reason to copy the full name of the only match.
 	 */
 	if (uniq == 1)
 		matches[0] = strdup(matches[1]);

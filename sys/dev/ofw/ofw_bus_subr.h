@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Marius Strobl <marius@FreeBSD.org>
  * All rights reserved.
@@ -84,6 +84,7 @@ ofw_bus_get_type_t	ofw_bus_gen_get_type;
 
 /* Helper method to report interesting OF properties in pnpinfo */
 bus_child_pnpinfo_t	ofw_bus_gen_child_pnpinfo;
+bus_get_device_path_t	ofw_bus_gen_get_device_path;
 
 /* Routines for processing firmware interrupt maps */
 void	ofw_bus_setup_iinfo(phandle_t, struct ofw_bus_iinfo *, int);

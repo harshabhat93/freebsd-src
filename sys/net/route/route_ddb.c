@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2019 Conrad Meyer <cem@FreeBSD.org>
  *
@@ -47,6 +47,7 @@ __FBSDID("$FreeBSD$");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_dl.h>
 #include <net/route.h>
 #include <net/route/nhop.h>

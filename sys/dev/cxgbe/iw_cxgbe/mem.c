@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
  *
@@ -489,7 +489,7 @@ struct ib_mr *c4iw_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
 	}
 
 	shift = ffs(mhp->umem->page_size) - 1;
-	
+
 	n = mhp->umem->nmap;
 	err = alloc_pbl(mhp, n);
 	if (err)

@@ -57,6 +57,8 @@ struct pfctl_status {
 	uint64_t	src_nodes;
 	char		ifname[IFNAMSIZ];
 	uint8_t		pf_chksum[PF_MD5_DIGEST_LENGTH];
+	bool		syncookies_active;
+	uint32_t	reass;
 
 	struct pfctl_status_counters	 counters;
 	struct pfctl_status_counters	 lcounters;
@@ -85,6 +87,9 @@ struct pfctl_eth_addr {
 struct pfctl_eth_rule {
 	uint32_t		 nr;
 
+	char			label[PF_RULE_MAX_LABEL_COUNT][PF_RULE_LABEL_SIZE];
+	uint32_t		ridentifier;
+
 	bool			 quick;
 
 	/* Filter */
@@ -109,6 +114,7 @@ struct pfctl_eth_rule {
 	char			 tagname[PF_TAG_NAME_SIZE];
 	uint16_t		 dnpipe;
 	uint32_t		 dnflags;
+	char			 bridge_to[IFNAMSIZ];
 	uint8_t			 action;
 
 	struct pfctl_eth_anchor	*anchor;
@@ -345,7 +351,7 @@ struct pfctl_state {
 	uint32_t		 creation;
 	uint32_t		 expire;
 	uint32_t		 pfsync_time;
-	uint8_t			 state_flags;
+	uint16_t		 state_flags;
 	uint32_t		 sync_flags;
 };
 

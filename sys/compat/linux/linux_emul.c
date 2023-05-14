@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1994-1996 Søren Schmidt
  * Copyright (c) 2006 Roman Divacky
@@ -32,17 +32,15 @@
 __FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
-#include <sys/systm.h>
 #include <sys/fcntl.h>
 #include <sys/imgact.h>
-#include <sys/kernel.h>
 #include <sys/ktr.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
-#include <sys/sx.h>
 #include <sys/proc.h>
 #include <sys/resourcevar.h>
+#include <sys/sx.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysent.h>
 

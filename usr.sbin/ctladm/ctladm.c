@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003, 2004 Silicon Graphics International Corp.
  * Copyright (c) 1997-2007 Kenneth D. Merry
@@ -336,7 +336,7 @@ retry:
 		if (ts.tv_nsec > 0)
 			cmd_latency += ts.tv_nsec / 1000000;
 
-		fprintf(stdout, "LUN %jd tag 0x%04x%s%s%s%s%s%s%s: %s. CDB: %s "
+		fprintf(stdout, "LUN %jd tag 0x%jx%s%s%s%s%s%s%s: %s. CDB: %s "
 			"(%0.0Lf ms)\n",
 			(intmax_t)entry->lun_num, entry->tag_num,
 			(entry->cmd_flags & CTL_OOACMD_FLAG_BLOCKED) ?

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  *
  * Copyright (c) 1999-2001, Vitaly V Belekhov
@@ -46,6 +46,7 @@
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_media.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/netisr.h>
 #include <net/route.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Takanori Watanabe
  * All rights reserved.
@@ -175,10 +175,8 @@ g_label_ntfs_taste(struct g_consumer *cp, char *label, size_t size)
 		}
 	}
 done:
-	if (bf != NULL)
-		g_free(bf);
-	if (filerecp != NULL)
-		g_free(filerecp);
+	g_free(bf);
+	g_free(filerecp);
 }
 
 struct g_label_desc g_label_ntfs = {

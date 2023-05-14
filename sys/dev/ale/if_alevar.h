@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008, Pyun YongHyeon <yongari@FreeBSD.org>
  * All rights reserved.
@@ -183,7 +183,7 @@ struct ale_hw_stats {
  * Software state per device.
  */
 struct ale_softc {
-	struct ifnet 		*ale_ifp;
+	if_t			ale_ifp;
 	device_t		ale_dev;
 	device_t		ale_miibus;
 	struct resource		*ale_res[1];

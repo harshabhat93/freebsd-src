@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 Turing Robotic Industries Inc.
  * Copyright (c) 2000 Marcel Moolenaar
@@ -38,6 +38,8 @@ __FBSDID("$FreeBSD$");
 #include <sys/ptrace.h>
 #include <sys/reg.h>
 #include <sys/sdt.h>
+
+#include <vm/vm_param.h>
 
 #include <arm64/linux/linux.h>
 #include <arm64/linux/linux_proto.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Poul-Henning Kamp
  * Copyright (c) 2010 Alexander Motin <mav@FreeBSD.org>
@@ -61,6 +61,11 @@ __FBSDID("$FreeBSD$");
 #include <dev/acpica/acpivar.h>
 #include <machine/md_var.h>
 #endif
+
+/* tunable to detect a power loss of the rtc */
+static bool atrtc_power_lost = false;
+SYSCTL_BOOL(_machdep, OID_AUTO, atrtc_power_lost, CTLFLAG_RD, &atrtc_power_lost,
+    false, "RTC lost power on last power cycle (probably caused by an emtpy cmos battery)");
 
 /*
  * atrtc_lock protects low-level access to individual hardware registers.
@@ -600,6 +605,7 @@ atrtc_gettime(device_t dev, struct timespec *ts)
 
 	/* Look if we have a RTC present and the time is valid */
 	if (!(rtcin(RTC_STATUSD) & RTCSD_PWR)) {
+		atrtc_power_lost = true;
 		device_printf(dev, "WARNING: Battery failure indication\n");
 		return (EINVAL);
 	}

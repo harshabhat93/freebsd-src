@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009, Pyun YongHyeon <yongari@FreeBSD.org>
  * All rights reserved.
@@ -204,7 +204,7 @@ struct alc_ident {
  * Software state per device.
  */
 struct alc_softc {
-	struct ifnet 		*alc_ifp;
+	if_t			alc_ifp;
 	device_t		alc_dev;
 	device_t		alc_miibus;
 	struct resource		*alc_res[1];

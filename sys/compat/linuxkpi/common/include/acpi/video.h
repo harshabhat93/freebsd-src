@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Vladimir Kondratyev <wulf@FreeBSD.org>
  *
@@ -30,6 +30,8 @@
 
 #ifndef _LINUXKPI_ACPI_VIDEO_H_
 #define _LINUXKPI_ACPI_VIDEO_H_
+
+#include <sys/errno.h>
 
 #define	ACPI_VIDEO_CLASS	"video"
 

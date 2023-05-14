@@ -5,6 +5,7 @@
  *	The Regents of the University of California. All Rights Reserved.
  * Copyright (c) 2004-2009 Robert N. M. Watson All Rights Reserved.
  * Copyright (c) 2018 Matthew Macy
+ * Copyright (c) 2022 Gleb Smirnoff <glebius@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -884,15 +885,10 @@ uipc_peeraddr(struct socket *so, struct sockaddr **nam)
 	KASSERT(unp != NULL, ("uipc_peeraddr: unp == NULL"));
 
 	*nam = malloc(sizeof(struct sockaddr_un), M_SONAME, M_WAITOK);
-	UNP_LINK_RLOCK();
-	/*
-	 * XXX: It seems that this test always fails even when connection is
-	 * established.  So, this else clause is added as workaround to
-	 * return PF_LOCAL sockaddr.
-	 */
-	unp2 = unp->unp_conn;
+
+	UNP_PCB_LOCK(unp);
+	unp2 = unp_pcb_lock_peer(unp);
 	if (unp2 != NULL) {
-		UNP_PCB_LOCK(unp2);
 		if (unp2->unp_addr != NULL)
 			sa = (struct sockaddr *) unp2->unp_addr;
 		else
@@ -903,7 +899,7 @@ uipc_peeraddr(struct socket *so, struct sockaddr **nam)
 		sa = &sun_noname;
 		bcopy(sa, *nam, sa->sa_len);
 	}
-	UNP_LINK_RUNLOCK();
+	UNP_PCB_UNLOCK(unp);
 	return (0);
 }
 
@@ -1337,7 +1333,7 @@ uipc_sosend_dgram(struct socket *so, struct sockaddr *addr, struct uio *uio,
 		f = NULL;
 	} else {
 		soroverflow_locked(so2);
-		error = (so->so_state & SS_NBIO) ? EAGAIN : ENOBUFS;
+		error = ENOBUFS;
 		if (f->m_next->m_type == MT_CONTROL)
 			unp_scan(f->m_next, unp_freerights);
 	}

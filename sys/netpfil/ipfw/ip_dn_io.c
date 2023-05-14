@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Luigi Rizzo, Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD$");
 
 #include <net/if.h>	/* IFNAMSIZ, struct ifaddr, ifq head, lock.h mutex.h */
 #include <net/if_var.h>	/* NET_EPOCH_... */
+#include <net/if_private.h>
 #include <net/netisr.h>
 #include <net/vnet.h>
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Stephane E. Potvin <sepotvin@videotron.ca>
  * All rights reserved.
@@ -200,6 +200,11 @@
 #define VIA_VENDORID		0x1106
 #define HDA_VIA_VT82XX		HDA_MODEL_CONSTRUCT(VIA, 0x3288)
 #define HDA_VIA_ALL		HDA_MODEL_CONSTRUCT(VIA, 0xffff)
+
+/* VMware */
+#define VMWARE_VENDORID		0x15ad
+#define HDA_VMWARE		HDA_MODEL_CONSTRUCT(VMWARE, 0x1977)
+#define HDA_VMWARE_ALL		HDA_MODEL_CONSTRUCT(VMWARE, 0xffff)
 
 /* SiS */
 #define SIS_VENDORID		0x1039
@@ -840,6 +845,10 @@
 #define HDA_CODEC_VT2002P_1	HDA_CODEC_CONSTRUCT(VIA, 0x4438)
 #define HDA_CODEC_VT2020	HDA_CODEC_CONSTRUCT(VIA, 0x0441)
 #define HDA_CODEC_VTXXXX	HDA_CODEC_CONSTRUCT(VIA, 0xffff)
+
+/* VMware */
+#define HDA_CODEC_VMWARE	HDA_CODEC_CONSTRUCT(VMWARE, 0x1975)
+#define HDA_CODEC_VMWAREXXXX	HDA_CODEC_CONSTRUCT(VMWARE, 0xffff)
 
 /* ATI */
 #define HDA_CODEC_ATIRS600_1	HDA_CODEC_CONSTRUCT(ATI, 0x793c)

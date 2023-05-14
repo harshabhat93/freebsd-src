@@ -832,6 +832,7 @@ zvol_cdev_read(struct cdev *dev, struct uio *uio_s, int ioflag)
 	    (zfs_uio_offset(&uio) < 0 || zfs_uio_offset(&uio) > volsize))
 		return (SET_ERROR(EIO));
 
+	rw_enter(&zv->zv_suspend_lock, ZVOL_RW_READER);
 	ssize_t start_resid = zfs_uio_resid(&uio);
 	lr = zfs_rangelock_enter(&zv->zv_rangelock, zfs_uio_offset(&uio),
 	    zfs_uio_resid(&uio), RL_READER);
@@ -853,6 +854,7 @@ zvol_cdev_read(struct cdev *dev, struct uio *uio_s, int ioflag)
 	zfs_rangelock_exit(lr);
 	int64_t nread = start_resid - zfs_uio_resid(&uio);
 	dataset_kstats_update_read_kstats(&zv->zv_kstat, nread);
+	rw_exit(&zv->zv_suspend_lock);
 
 	return (error);
 }
@@ -1212,7 +1214,10 @@ zvol_cdev_ioctl(struct cdev *dev, ulong_t cmd, caddr_t data,
 
 		hole = (cmd == FIOSEEKHOLE);
 		noff = *off;
+		lr = zfs_rangelock_enter(&zv->zv_rangelock, 0, UINT64_MAX,
+		    RL_READER);
 		error = dmu_offset_next(zv->zv_objset, ZVOL_OBJ, hole, &noff);
+		zfs_rangelock_exit(lr);
 		*off = noff;
 		break;
 	}
@@ -1386,6 +1391,7 @@ zvol_os_create_minor(const char *name)
 	uint64_t volsize;
 	uint64_t volmode, hash;
 	int error;
+	bool replayed_zil = B_FALSE;
 
 	ZFS_LOG(1, "Creating ZVOL %s...", name);
 	hash = zvol_name_hash(name);
@@ -1490,11 +1496,12 @@ zvol_os_create_minor(const char *name)
 	zv->zv_zilog = zil_open(os, zvol_get_data, &zv->zv_kstat.dk_zil_sums);
 	if (spa_writeable(dmu_objset_spa(os))) {
 		if (zil_replay_disable)
-			zil_destroy(zv->zv_zilog, B_FALSE);
+			replayed_zil = zil_destroy(zv->zv_zilog, B_FALSE);
 		else
-			zil_replay(os, zv, zvol_replay_vector);
+			replayed_zil = zil_replay(os, zv, zvol_replay_vector);
 	}
-	zil_close(zv->zv_zilog);
+	if (replayed_zil)
+		zil_close(zv->zv_zilog);
 	zv->zv_zilog = NULL;
 
 	/* TODO: prefetch for geom tasting */

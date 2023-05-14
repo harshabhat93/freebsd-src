@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Atsushi Onoe
  * Copyright (c) 2002-2009 Sam Leffler, Errno Consulting
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD$");
 #include <net/if_var.h>
 #include <net/if_llc.h>
 #include <net/if_media.h>
+#include <net/if_private.h>
 #include <net/if_vlan_var.h>
 
 #include <net80211/ieee80211_var.h>

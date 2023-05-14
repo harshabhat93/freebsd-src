@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019, 2020 Jeffrey Roberson <jeff@FreeBSD.org>
  *
@@ -241,11 +241,11 @@ void smr_destroy(smr_t smr);
 /*
  * Blocking wait for all readers to observe 'goal'.
  */
-static inline bool
+static inline void
 smr_wait(smr_t smr, smr_seq_t goal)
 {
 
-	return (smr_poll(smr, goal, true));
+	(void)smr_poll(smr, goal, true);
 }
 
 /*

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Brian Somers <brian@Awfulhak.org>
  * All rights reserved.
@@ -96,8 +96,8 @@ extern void ncp2initial(struct ncp *);
           ncp_ClearUrgentPorts(&(ncp)->cfg.urgent.tcp)
 #define ncp_ClearUrgentUdpPorts(ncp) \
           ncp_ClearUrgentPorts(&(ncp)->cfg.urgent.udp)
-#define ncp_ClearUrgentTOS(ncp) (ncp)->cfg.urgent.tos = 0;
-#define ncp_SetUrgentTOS(ncp) (ncp)->cfg.urgent.tos = 1;
+#define ncp_ClearUrgentTOS(ncp) (ncp)->cfg.urgent.tos = 0
+#define ncp_SetUrgentTOS(ncp) (ncp)->cfg.urgent.tos = 1
 
 #ifndef NOINET6
 #define isncp(proto) ((proto) == PROTO_IPCP || (proto) == PROTO_IPV6CP)

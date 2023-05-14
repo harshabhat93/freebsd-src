@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 #  Copyright (c) 2010 Gordon Tetlow
 #  All rights reserved.
@@ -27,6 +27,12 @@
 #  SUCH DAMAGE.
 #
 # $FreeBSD$
+
+# Rendering a manual page is fast. Even a manual page several 100k in size
+# takes less than a CPU second. If it takes much longer, it is very likely
+# that a tool like mandoc(1) is running in an infinite loop. In this case
+# it is better to terminate it.
+ulimit -t 20
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -903,6 +909,7 @@ setup_cattool() {
 	*.gz)	cattool='/usr/bin/zcat' ;;
 	*.lzma)	cattool='/usr/bin/lzcat' ;;
 	*.xz)	cattool='/usr/bin/xzcat' ;;
+	*.zst)	cattool='/usr/bin/zstdcat' ;;
 	*)	cattool='/usr/bin/zcat -f' ;;
 	esac
 }

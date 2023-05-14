@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007-2009 Robert N. M. Watson
  * Copyright (c) 2010-2011 Juniper Networks, Inc.
@@ -93,6 +93,7 @@ __FBSDID("$FreeBSD$");
 #define	_WANT_NETISR_INTERNAL	/* Enable definitions from netisr_internal.h */
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/netisr.h>
 #include <net/netisr_internal.h>
 #include <net/vnet.h>

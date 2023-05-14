@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Netflix, Inc.
  *
@@ -83,6 +83,9 @@ mntfs_allocvp(struct mount *mp, struct vnode *ovp)
 	dev_ref(dev);
 	vp->v_rdev = dev;
 
+	VOP_UNLOCK(ovp);
+	vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
+	vn_set_state(vp, VSTATE_CONSTRUCTED);
 	return (vp);
 }
 

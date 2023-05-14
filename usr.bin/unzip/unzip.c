@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009, 2010 Joerg Sonnenberger <joerg@NetBSD.org>
  * Copyright (c) 2007-2008 Dag-Erling Smørgrav
@@ -998,8 +998,9 @@ static void
 usage(void)
 {
 
-	fprintf(stderr, "Usage: unzip [-aCcfjLlnopqtuvyZ1] [-d dir] "
-		"[-x pattern] [-P password] zipfile\n");
+	fprintf(stderr,
+"Usage: unzip [-aCcfjLlnopqtuvyZ1] [-d dir] [-x pattern] [-P password] zipfile\n"
+"             [member ...]\n");
 	exit(EXIT_FAILURE);
 }
 

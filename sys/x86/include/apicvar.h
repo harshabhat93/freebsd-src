@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  *
@@ -77,7 +77,7 @@
 
 #define	xAPIC_MAX_APIC_ID	0xfe
 #define	xAPIC_ID_ALL		0xff
-#define	MAX_APIC_ID		0x200
+#define	MAX_APIC_ID		0x800
 #define	APIC_ID_ALL		0xffffffff
 
 #define	IOAPIC_MAX_ID		xAPIC_MAX_APIC_ID

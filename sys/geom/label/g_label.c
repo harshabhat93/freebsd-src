@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -392,6 +392,10 @@ g_label_taste(struct g_class *mp, struct g_provider *pp, int flags __unused)
 
 	/* Skip providers that are already open for writing. */
 	if (pp->acw > 0)
+		return (NULL);
+
+	/* Skip broken disks that don't set their sector size */
+	if (pp->sectorsize == 0)
 		return (NULL);
 
 	if (strcmp(pp->geom->class->name, mp->name) == 0)

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2013 Qlogic Corporation
  * All rights reserved.
@@ -53,7 +53,7 @@ int
 qla_make_cdev(qla_host_t *ha)
 {
         ha->ioctl_dev = make_dev(&qla_cdevsw,
-				ha->ifp->if_dunit,
+				if_getdunit(ha->ifp),
                                 UID_ROOT,
                                 GID_WHEEL,
                                 0600,

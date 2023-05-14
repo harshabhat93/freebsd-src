@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007-2008
  * 	Swinburne University of Technology, Melbourne, Australia
@@ -256,7 +256,7 @@ htcp_cb_init(struct cc_var *ccv, void *ptr)
 {
 	struct htcp *htcp_data;
 
-	INP_WLOCK_ASSERT(ccv->ccvc.tcp->t_inpcb);
+	INP_WLOCK_ASSERT(tptoinpcb(ccv->ccvc.tcp));
 	if (ptr == NULL) {
 		htcp_data = malloc(sizeof(struct htcp), M_CC_MEM, M_NOWAIT);
 		if (htcp_data == NULL)

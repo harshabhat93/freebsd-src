@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -107,7 +107,7 @@ enum {
 	CTRL_ATTR_MCAST_GRP_ID,		/* u32, dynamically-assigned group id */
 	__CTRL_ATTR_MCAST_GRP_MAX,
 };
-#define	CTRL_ATTR_MCAST_GRP_MAX	(CTRL_ATTR_MCAST_GRP_MAX - 1)
+#define	CTRL_ATTR_MCAST_GRP_MAX	(__CTRL_ATTR_MCAST_GRP_MAX - 1)
 
 
 #endif

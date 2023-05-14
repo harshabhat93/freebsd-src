@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Roger Pau Monné <roger.pau@citrix.com>
  * All rights reserved.
@@ -36,7 +36,7 @@
 
 int boot_env_to_howto(void);
 void boot_howto_to_env(int howto);
-int boot_parse_arg(char *v);
+int boot_parse_arg(const char *v);
 int boot_parse_cmdline_delim(char *cmdline, const char *delim);
 int boot_parse_cmdline(char *cmdline);
 int boot_parse_args(int argc, char *argv[]);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2010
  *	Swinburne University of Technology, Melbourne, Australia
@@ -133,7 +133,7 @@ vegas_ack_received(struct cc_var *ccv, uint16_t ack_type)
 	struct vegas *vegas_data;
 	long actual_tx_rate, expected_tx_rate, ndiff;
 
-	e_t = khelp_get_osd(CCV(ccv, osd), ertt_id);
+	e_t = khelp_get_osd(&CCV(ccv, t_osd), ertt_id);
 	vegas_data = ccv->cc_data;
 
 	if (e_t->flags & ERTT_NEW_MEASUREMENT) { /* Once per RTT. */
@@ -187,7 +187,7 @@ vegas_cb_init(struct cc_var *ccv, void *ptr)
 {
 	struct vegas *vegas_data;
 
-	INP_WLOCK_ASSERT(ccv->ccvc.tcp->t_inpcb);
+	INP_WLOCK_ASSERT(tptoinpcb(ccv->ccvc.tcp));
 	if (ptr == NULL) {
 		vegas_data = malloc(sizeof(struct vegas), M_CC_MEM, M_NOWAIT);
 		if (vegas_data == NULL)
